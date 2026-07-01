@@ -18,7 +18,7 @@ Reviewer configuration:
 Suggested Humanize command:
 
 ```text
-/humanize:start-rlcr-loop docs/vliw-plan.md --yolo --max 20 --codex-model gpt-5.5:xhigh --codex-timeout 5400 --full-review-round 3
+/humanize:start-rlcr-loop docs/vliw-plan.md --track-plan-file --yolo --max 20 --codex-model gpt-5.5:xhigh --codex-timeout 5400 --full-review-round 3
 ```
 
 The H800 host may be used as a remote CPU machine, but this challenge does not use the GPU and must not use H800 SXM/PCIe performance assumptions.
