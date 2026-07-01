@@ -51,6 +51,28 @@ Remote CPU-only evaluation may use:
 /home/wanrui/.venvs/torch210-h800-bench/bin/python tools/eval_kernel.py --python /home/wanrui/.venvs/torch210-h800-bench/bin/python
 ```
 
+## Execution Mode
+
+Default to a lightweight implementation loop, not the full RLCR planning shell.
+
+The planning shell is useful for a fresh problem, but this repository already has:
+
+- A frozen objective and acceptance criteria in this file.
+- Baseline evidence in `candidates.jsonl` and `.humanize/evals/results.jsonl`.
+- A saved `gpt-5.5:xhigh` Codex ISA review under `.humanize/skill/` when running remotely.
+- A narrow evaluator and static analyzer under `tools/`.
+
+For this task, the main loop is:
+
+1. Implement one focused candidate in `perf_takehome.py`.
+2. Run `tools/analyze_instrs.py`.
+3. Run `tools/eval_kernel.py`.
+4. Record the candidate in `candidates.jsonl`.
+5. Promote only correct improvements; repair or revert failed candidates.
+6. Ask Codex `gpt-5.5:xhigh` for review only after a meaningful candidate or before a high-risk legality change.
+
+Do not spend additional rounds on plan compliance, quizzes, bitlesson selection, task-agent setup, or other scaffold work unless the user explicitly asks for it. Those steps have already consumed enough context and are not the bottleneck.
+
 ## Workflow Rules
 
 1. Read `docs/vliw-draft.md`, `problem.py`, `tests/frozen_problem.py`, and `perf_takehome.py` before implementation.
